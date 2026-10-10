@@ -1,31 +1,41 @@
 import csv
-# BEFORE the with block:
-# 1. Create an empty dictionary called totals
-totals = {}
-# 2. Create a counter called skipped, starting at 0
-skipped = 0
-with open("landings.csv") as file:
-    reader = csv.DictReader(file)
-    for row in reader:
-# INSIDE the for loop:
-# 3. TRY to convert row["weight_kg"] to a float, store it in weight
-        try:
-            weight = float(row["weight_kg"])
-# 4. EXCEPT ValueError: add 1 to skipped, then continue
-        except ValueError:
-            skipped += 1
-            continue
-# 5. Store row["species"] in a variable called species
-        species = row["species"]
-# 6. If species is NOT in totals yet, set totals[species] to 0
-        if species not in totals:
-            totals[species] = 0
-# 7. Add weight to totals[species]
-        totals[species] += weight
-# AFTER the with block (back at level 0):
-# 8. Loop through totals and print each species and total with an f-string
-for species, total in totals.items():
+# 1. Define a function called total_by that takes one parameter: column
+
+
+def total_by(column):
+    # 2. Inside it: create empty totals and set skipped to 0
+    totals = {}
+    skipped = 0
+    # 3. Open the file, make the reader, loop over rows (same as before)
+    with open("landings.csv") as file:
+        reader = csv.DictReader(file)
+        # 4. Try/except for weight (same as before)
+        for row in reader:
+            try:
+                weight = float(row["weight_kg"])
+            except ValueError:
+                skipped += 1
+                continue
+            # 5. key = row[column]
+            key = row[column]
+            # 6. If key not in totals, start it at 0
+            if key not in totals:
+                totals[key] = 0
+            # 7. Add weight to totals[key]
+            totals[key] += weight
+    # 8. After the with block, still inside the function: return totals, skipped
+    return totals, skipped
+
+
+# 9. Outside the function (level 0): call it for species
+species_totals, skipped = total_by("species")
+# 10. Print each species total, then skipped
+for species, total in species_totals.items():
     print(f"{species}: {total} kg")
-# 9. Print the skipped count
-print(f"Rows skipped: {skipped}")
+print(f"skipped: {skipped}")
+# 11. Call it again for landing_site and print those totals
+site_totals, skipped = total_by("landing_site")
+for landing_site, total in site_totals.items():
+    print(f"{landing_site}: {total} kg")
+print(f"skipped: {skipped}")
 
