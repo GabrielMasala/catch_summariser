@@ -37,6 +37,10 @@ for species, total in species_totals.items():
 print(f"Rows: {total_rows}")
 print(f"Good: {good_rows}")
 print(f"Skipped: {skipped}")
+if  good_rows + skipped == total_rows:
+    print("PASS")
+else:
+    print("FAIL")
 # 11. Call it again for landing_site and print those totals
 site_totals, total_rows, good_rows, skipped = total_by("landing_site")
 for landing_site, total in site_totals.items():
@@ -44,4 +48,8 @@ for landing_site, total in site_totals.items():
 print(f"Rows: {total_rows}")
 print(f"Good: {good_rows}")
 print(f"Skipped: {skipped}")
+if good_rows + skipped == total_rows:
+    print("PASS")
+else:
+    print("FAIL")
 
