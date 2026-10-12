@@ -38,9 +38,9 @@ print(f"Rows: {total_rows}")
 print(f"Good: {good_rows}")
 print(f"Skipped: {skipped}")
 if  good_rows + skipped == total_rows:
-    print("PASS")
+    print(f"Row check: PASS")
 else:
-    print("FAIL")
+    print(f"Row check: FAIL")
 # 11. Call it again for landing_site and print those totals
 site_totals, total_rows, good_rows, skipped = total_by("landing_site")
 for landing_site, total in site_totals.items():
@@ -49,7 +49,14 @@ print(f"Rows: {total_rows}")
 print(f"Good: {good_rows}")
 print(f"Skipped: {skipped}")
 if good_rows + skipped == total_rows:
-    print("PASS")
+    print(f"Row check: PASS")
 else:
-    print("FAIL")
-
+    print(f"Row check: FAIL")
+species_sum = sum(species_totals.values())
+sites_sum = sum(site_totals.values())
+print(f"Total landings by Species: {species_sum}")
+print(f"Total landings by Site: {sites_sum}")
+if species_sum == sites_sum:
+    print(f"Cross-check: PASS")
+else:
+    print(f"Cross-check: FAIL")
