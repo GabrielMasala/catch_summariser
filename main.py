@@ -38,9 +38,10 @@ print(f"Rows: {total_rows}")
 print(f"Good: {good_rows}")
 print(f"Skipped: {skipped}")
 if  good_rows + skipped == total_rows:
-    print("Row check: PASS")
+    row_status = "Row check: PASS"
 else:
-    print("Row check: FAIL")
+    row_status = "Row check: FAIL"
+print(row_status)
 # 11. Call it again for landing_site and print those totals
 site_totals, total_rows, good_rows, skipped = total_by("landing_site")
 for landing_site, total in site_totals.items():
@@ -48,19 +49,33 @@ for landing_site, total in site_totals.items():
 print(f"Rows: {total_rows}")
 print(f"Good: {good_rows}")
 print(f"Skipped: {skipped}")
+
 if good_rows + skipped == total_rows:
-    print("Row check: PASS")
+    row_status = "Row check: PASS"
 else:
-    print("Row check: FAIL")
+    row_status = "Row check: FAIL"
+print(row_status)
+
 species_sum = sum(species_totals.values())
 sites_sum = sum(site_totals.values())
 print(f"Total landings by Species: {species_sum}")
 print(f"Total landings by Site: {sites_sum}")
 if species_sum == sites_sum:
-    print("Cross-check: PASS")
+    check_status = "Cross-check: PASS"
 else:
-    print("Cross-check: FAIL")
+    check_status = "Cross-check: FAIL"
+print(check_status)
 
 with open("summary.txt", "w") as out:
+    out.write("SPECIES\n")
     for species, total in species_totals.items():
-        out.write(f"{species}: {total}\n")
+        out.write(f"{species}: {total} kg\n")
+    out.write("\n")
+    out.write("LANDING SITES\n")
+    for landing_site, total in site_totals.items():
+        out.write(f"{landing_site}: {total} kg\n")
+    out.write("\n")
+    out.write("CHECKS\n")
+    out.write(f"Rows: {total_rows} | Good: {good_rows} | Skipped: {skipped}\n")
+    out.write(f"{row_status}\n")
+    out.write(f"{check_status}\n")
