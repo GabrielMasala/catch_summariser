@@ -79,3 +79,26 @@ with open("summary.txt", "w") as out:
     out.write(f"Rows: {total_rows} | Good: {good_rows} | Skipped: {skipped}\n")
     out.write(f"{row_status}\n")
     out.write(f"{check_status}\n")
+
+# define flag_outliers, taking one parameter: threshold
+def flag_outliers(threshold):
+    # create an empty list for flagged rows
+    flagged_rows = []
+    # open the file, make the reader, loop over rows (same as total_by)
+    with open("landings.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            # try/except: convert the weight; skip bad rows with continue
+            try:
+                weight = float(row["weight_kg"])
+            except ValueError:
+                continue
+        # if the weight is above the threshold: append the whole row to the list
+            if weight > threshold:
+                flagged_rows.append(row)
+    # after the with block: return the list
+    return flagged_rows
+outliers = flag_outliers(60)
+print(f"Flagged: {len(outliers)}")
+for row in outliers:
+        print(f"{row['date']}|{row['landing_site']}|{row['weight_kg']} kg")
