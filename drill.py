@@ -25,4 +25,29 @@ print(f"Flagged Below: {len(flagged_rows)}")
 for row in flagged_rows:
     print(f"{row['date']}|{row['landing_site']}|{row['weight_kg']} kg")
 
+# Drill B: The count by function
+def count_by(column):
+    counts = {}
+    with open("landings.csv") as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            try:
+                weight = float(row["weight_kg"])
+            except ValueError:
+                continue
+            key = row[column]
+            if key not in counts:
+                counts[key] = 0
+            counts[key] += 1
+    return counts
+
+total_species = count_by("species")
+print("SPECES")
+print(f"Pweza: {total_species['pweza']}, Ngisi: {total_species['ngisi']}, Tasi: {total_species['tasi']}")
+
+total_sites = count_by("landing_site")
+print("SITES")
+print(total_sites)
+
+
 
