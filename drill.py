@@ -42,9 +42,9 @@ def count_by(column):
     return counts
 
 total_species = count_by("species")
-print("SPECES")
-print(f"Pweza: {total_species['pweza']}, Ngisi: {total_species['ngisi']}, Tasi: {total_species['tasi']}")
-
+print("SPECIES")
+for species, total in total_species.items():
+    print(f"{species}: {total}")
 total_sites = count_by("landing_site")
 print("SITES")
 print(total_sites)
