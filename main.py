@@ -1,12 +1,12 @@
 import csv
 LANDINGS = "landings.csv"
 
-def total_by(column, LANDINGS):
+def total_by(column, filename):
     totals = {}
     skipped = 0
     total_rows = 0
     good_rows = 0
-    with open(LANDINGS) as file:
+    with open(filename) as file:
         reader = csv.DictReader(file)
         for row in reader:
             total_rows += 1
@@ -71,9 +71,9 @@ with open("summary.txt", "w") as out:
     out.write(f"{check_status}\n")
 
 
-def flag_outliers(threshold, LANDINGS):
+def flag_outliers(threshold, filename):
     flagged_rows = []
-    with open(LANDINGS) as file:
+    with open(filename) as file:
         reader = csv.DictReader(file)
         for row in reader:
             try:

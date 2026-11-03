@@ -39,7 +39,7 @@ In `summary.txt` (overwritten on each run):
 - A row of exactly 60 kg is **not** flagged (the rule is strictly greater than).
 
 ## Known limits
-- The filename and threshold are fixed in the code.
+- File name is assigned at the beginning, threshold is fixed in the code.
 - One threshold is used for every species.
 - Blank species or landing site values are not checked.
 - Negative weights are accepted.
