@@ -1,12 +1,12 @@
 import csv
+LANDINGS = "landings.csv"
 
-
-def total_by(column):
+def total_by(column, LANDINGS):
     totals = {}
     skipped = 0
     total_rows = 0
     good_rows = 0
-    with open("landings.csv") as file:
+    with open(LANDINGS) as file:
         reader = csv.DictReader(file)
         for row in reader:
             total_rows += 1
@@ -22,7 +22,7 @@ def total_by(column):
             totals[key] += weight
     return totals, total_rows, good_rows, skipped
 
-species_totals, total_rows, good_rows, skipped = total_by("species")
+species_totals, total_rows, good_rows, skipped = total_by("species", LANDINGS)
 for species, total in species_totals.items():
     print(f"{species}: {total} kg")
 print(f"Rows: {total_rows}")
@@ -34,7 +34,7 @@ else:
     row_status = "Row check: FAIL"
 print(row_status)
 
-site_totals, total_rows, good_rows, skipped = total_by("landing_site")
+site_totals, total_rows, good_rows, skipped = total_by("landing_site", LANDINGS)
 for landing_site, total in site_totals.items():
     print(f"{landing_site}: {total} kg")
 print(f"Rows: {total_rows}")
@@ -71,9 +71,9 @@ with open("summary.txt", "w") as out:
     out.write(f"{check_status}\n")
 
 
-def flag_outliers(threshold):
+def flag_outliers(threshold, LANDINGS):
     flagged_rows = []
-    with open("landings.csv") as file:
+    with open(LANDINGS) as file:
         reader = csv.DictReader(file)
         for row in reader:
             try:
@@ -83,7 +83,7 @@ def flag_outliers(threshold):
             if weight > threshold:
                 flagged_rows.append(row)
     return flagged_rows
-outliers = flag_outliers(60)
+outliers = flag_outliers(60, LANDINGS)
 print(f"Flagged: {len(outliers)}")
 for row in outliers:
         print(f"{row['date']}|{row['landing_site']}|{row['weight_kg']} kg")
