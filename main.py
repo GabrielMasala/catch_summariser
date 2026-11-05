@@ -1,5 +1,6 @@
 import csv
 LANDINGS = "landings.csv"
+THRESHOLD = 60
 
 def total_by(column, filename):
     totals = {}
@@ -56,20 +57,6 @@ else:
     check_status = "Cross-check: FAIL"
 print(check_status)
 
-with open("summary.txt", "w") as out:
-    out.write("SPECIES\n")
-    for species, total in species_totals.items():
-        out.write(f"{species}: {total} kg\n")
-    out.write("\n")
-    out.write("LANDING SITES\n")
-    for landing_site, total in site_totals.items():
-        out.write(f"{landing_site}: {total} kg\n")
-    out.write("\n")
-    out.write("CHECKS\n")
-    out.write(f"Rows: {total_rows} | Good: {good_rows} | Skipped: {skipped}\n")
-    out.write(f"{row_status}\n")
-    out.write(f"{check_status}\n")
-
 
 def flag_outliers(threshold, filename):
     flagged_rows = []
@@ -83,7 +70,29 @@ def flag_outliers(threshold, filename):
             if weight > threshold:
                 flagged_rows.append(row)
     return flagged_rows
-outliers = flag_outliers(60, LANDINGS)
+outliers = flag_outliers(THRESHOLD, LANDINGS)
 print(f"Flagged: {len(outliers)}")
 for row in outliers:
         print(f"{row['date']}|{row['landing_site']}|{row['weight_kg']} kg")
+
+
+with open("summary.txt", "w") as out:
+    out.write("SPECIES\n")
+    for species, total in species_totals.items():
+        out.write(f"{species}: {total} kg\n")
+    out.write("\n")
+    out.write("LANDING SITES\n")
+    for landing_site, total in site_totals.items():
+        out.write(f"{landing_site}: {total} kg\n")
+    out.write("\n")
+    out.write("CHECKS\n")
+    out.write(f"Rows: {total_rows} | Good: {good_rows} | Skipped: {skipped}\n")
+    out.write(f"{row_status}\n")
+    out.write(f"{check_status}\n")
+    out.write("\n")
+    out.write(f"UNUSUAL LANDINGS (>{THRESHOLD}) kg\n")
+    if outliers:
+        for row in outliers:
+            out.write(f"{row['date']}|{row['landing_site']}|{row['weight_kg']} kg\n")
+    else:
+        out.write("None\n")
