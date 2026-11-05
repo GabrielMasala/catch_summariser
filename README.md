@@ -24,7 +24,7 @@ On screen:
 In `summary.txt` (overwritten on each run):
 - Totals by species and by site
 - Row counts and check results
-- Outliers are NOT written to the file yet
+- Unusual landings (weight > `THRESHOLD`), one line per landing as date|site|weight kg, or `None` if there are none.
 
 ## Checks
 - **Row check:** good rows + skipped rows = total rows, so no row is lost.
@@ -34,8 +34,8 @@ In `summary.txt` (overwritten on each run):
 ## Rules and assumptions
 - A row is **bad** if `weight_kg` cannot be converted to a number (for
   example, blank or text). Bad rows are skipped and counted, not totalled.
-- A row is an **outlier** if its weight is greater than 60 kg. The 60 kg
-  threshold is arbitrary and set in the code at `flag_outliers(60)`.
+- A row is an **outlier** if its weight is greater than `THRESHOLD`. The 60 kg
+  threshold is arbitrary and set in the code at `THRESHOLD = 60`.
 - A row of exactly 60 kg is **not** flagged (the rule is strictly greater than).
 
 ## Known limits

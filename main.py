@@ -90,7 +90,7 @@ with open("summary.txt", "w") as out:
     out.write(f"{row_status}\n")
     out.write(f"{check_status}\n")
     out.write("\n")
-    out.write(f"UNUSUAL LANDINGS (>{THRESHOLD}) kg\n")
+    out.write(f"UNUSUAL LANDINGS (>{THRESHOLD} kg)\n")
     if outliers:
         for row in outliers:
             out.write(f"{row['date']}|{row['landing_site']}|{row['weight_kg']} kg\n")

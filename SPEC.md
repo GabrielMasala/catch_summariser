@@ -1,6 +1,6 @@
 # SPEC: Unusual landings in summary.txt
 
-Status: NOT IMPLEMENTED (the README describes current behaviour)
+Status: IMPLEMENTED
 
 ## 1. Reader
 The Head of Programme at the NGO. They open summary.txt and never
