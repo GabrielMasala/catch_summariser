@@ -48,3 +48,22 @@ b) Edge case: temporarily change the threshold to 400 (any value of
    must match section 5. Revert to 60. NEVER commit the test value. [M]
 c) Regression: everything above the new section (species, sites,
    checks) is unchanged from the current summary.txt. [M]
+
+## Notebook version (catch_summary.ipynb)
+
+Same input (landings.csv), same validation rule and same THRESHOLD as
+main.py. Output: notebook_summary.txt (not tracked by Git).
+
+Intended differences from main.py:
+- A landing site whose weights are ALL invalid is listed as `nan kg`
+  (unknown), not 0 and not hidden. In landings.csv: mshembe.
+  Reason: the landing happened; only its weight is unknown.
+- Species and site totals are listed alphabetically
+  (main.py: order of first appearance in the file).
+- Weights in UNUSUAL LANDINGS are shown as decimals: `69.0 kg`
+  (main.py: `69 kg`).
+
+Tests:
+- Matches the answer key, except the three differences above.
+- THRESHOLD = 300 → UNUSUAL LANDINGS shows `None`.
+- Cross-check: species sum = site sum = 677.5.

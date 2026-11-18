@@ -44,3 +44,16 @@ In `summary.txt` (overwritten on each run):
 - Blank species or landing site values are not checked.
 - Negative weights are accepted.
 - Totals can show float noise (e.g. 371.0000003 on larger datasets).
+
+## Notebook version
+
+The same analysis rebuilt with pandas in a Jupyter notebook.
+
+To run:
+1. In the project folder, with the virtual environment active: `jupyter lab`
+2. Open `catch_summary.ipynb`
+3. Kernel → Restart Kernel and Run All Cells
+
+Writes `notebook_summary.txt` to the project folder.
+Requires pandas and jupyterlab installed in `.venv`.
+Differences from main.py's output are listed in SPEC.md.
